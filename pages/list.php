@@ -39,8 +39,11 @@
                         <tbody>
                              <?php
                                 require_once "../controllers/categoriesController.php";
+                                require_once "../controllers/tasksController.php";
                                 use Controllers\CategoryController;
+                                use Controllers\TaskController;
                                 
+                                $task = new TaskController;
                                 $cat = new CategoryController();
                                 $categorias = $cat->getAllcategories();
 
@@ -48,7 +51,7 @@
                                     echo "<tr>";
                                     echo "<td>". $cate->categoryId ."</td>";
                                     echo "<td style='text-align:center;'>". $cate->categoryName ."</td>";
-                                    echo "<td style='text-align:center;'>12</td>";  
+                                    echo "<td style='text-align:center;'>". $task->countTasks($cate->categoryId)."</td>";  
                                     echo "<td style='text-align:center;'>
                                             <a href='newtask.php?id=" . $cate->categoryId . "'>
                                                 <button type='button' class='btn btn-primary btn-sm'>

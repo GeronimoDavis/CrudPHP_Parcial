@@ -23,7 +23,18 @@ namespace Controllers;
                 echo "Error al obtener las categorias" . $e->getMesagge();
                 return $cantTasks;
             }
+        } 
+
+        public function getTasksByIdCategory($idCat){
+            try{
+                $tasks = $this->task->getAll($idCat);
+                return $tasks;
+            }catch(PDOExeption $e){
+                echo "Error al obtener las categorias" . $e->getMesagge();
+                return $tasks;
+            }
         }
+        
     }
 
 ?>

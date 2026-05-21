@@ -38,22 +38,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>5</td>
-                                <td>IMPLEMENTACIÓN SERVIDOR MySQL</td>    
-                                <td>2023-06-05</td>
-                                <td>10</td>
-                                <td>FINALIZADA</td>
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>DDL BASE DE DATOS STOCK</td>    
-                                <td>2023-06-05</td>
-                                <td>7</td>
-                                <td>PENDIENTE</td>
-                            </tr>    
-                                 
-                                 
+                            <?php
+                                require_once "../controllers/tasksController.php";
+                                use Controllers\TaskController;
+
+                                $idCat = $_GET["id"];
+
+                                $task = new TaskController;
+                                $tasks = $task->getTasksByIdCategory($idCat);
+                            
+                                foreach($tasks as $tas){
+                                    echo "<tr>";
+                                    echo "<td>". $tas->taskId ."</td>";
+                                    echo "<td>". $tas->title."</td>"; 
+                                    echo "<td>". $tas->start ."</td>";
+                                    echo "<td>".$tas->priority."</td>";
+                                    echo "<td>". $tas->state ."</td>";
+                                    echo "</tr>";
+                                }
+                                
+                            ?>
                         </tbody>
                     </table>
                 </div>

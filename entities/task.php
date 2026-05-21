@@ -23,15 +23,16 @@ class Tasks{
         $this->conn = $db;
     }
 
-    public function getAll(){
+    public function getAll($idCategory){
         try{
-            $query = "SELECT * FROM tasks";
+            $query = "SELECT * FROM tasks WHERE categoryId = :cat";
             $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":cat", $idCategory);
             $stmt->execute();
 
             $tasks = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-            return tasks;
+            return $tasks;
         }catch(PDOException $e){
             echo "Error get tasks: ". $e->getMessage();
         }

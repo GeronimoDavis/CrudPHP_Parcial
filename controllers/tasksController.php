@@ -19,8 +19,8 @@ namespace Controllers;
             try{
                 $cantTasks = $this->task->count($idCat);
                 return $cantTasks;
-            }catch(PDOExeption $e){
-                echo "Error al obtener las categorias" . $e->getMesagge();
+            }catch(PDOException $e){
+                echo "Error al obtener las categorias" . $e->getMessage();
                 return $cantTasks;
             }
         } 
@@ -29,12 +29,31 @@ namespace Controllers;
             try{
                 $tasks = $this->task->getAll($idCat);
                 return $tasks;
-            }catch(PDOExeption $e){
-                echo "Error al obtener las categorias" . $e->getMesagge();
-                return $tasks;
+            }catch(PDOException $e){
+                echo "Error al obtener las categorias" . $e->getMessage();
             }
         }
-        
+
+        public function createTask(){
+            $this->task->categoryId = $_POST['categoryId'];
+            $this->task->title = $_POST['title'];
+            $this->task->description = $_POST['description'];
+            $this->task->finish = $_POST['finish'];
+            $this->task->priority = $_POST['priority'];
+            $this->task->state = $_POST['state'];
+
+            if($this->task->create()){
+                echo "Tarea creada exitosamente.";
+            } else {
+                echo "Error al crear la tarea.";
+            }
+        }
+
+    }
+
+    if(isset($_POST["action"]) && $_POST["action"] === "create"){
+        $controller = new TaskController();
+        $controller->createTask();
     }
 
 ?>

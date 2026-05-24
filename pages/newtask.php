@@ -65,31 +65,33 @@
             <div class="row">
         <div class="col"><hr></div>
     </div>
-             <form>
+             <form action="../controllers/tasksController.php" method="POST">
+                <input type="hidden" name="categoryId" value="<?php echo $idCat; ?>">
+                <input type = "hidden" name="action" value="create">
             <div class="row mb-3">
                 <div class="col">
             <label class="form-label" for="responsible">TÍTULO</label>
-            <input type="text" class="form-control form-control-sm" placeholder="Título de la tarea">
+            <input type="text" name="title" class="form-control form-control-sm" placeholder="Título de la tarea">
             </div>
             <div class="col">
                 <label for="rangePriority" class="form-label">PRIORIDAD</label>
-                <input type="range" class="form-range form-control-sm" min="1" max="10" step="1" id="rangePriority">
+                <input type="range" name="priority" class="form-range form-control-sm" min="1" max="10" step="1" id="rangePriority">
                 </div>
             </div>  
             <div class="row mb-3">
                 <div class="col">
                     <label for="description" class="form-label">DESCRIPCIÓN</label>
-                    <textarea type="text" id="Nombre" class="form-control form-control-sm" placeholder="Descripción de la tarea" maxlength="255" aria-label="Descripción"></textarea>
+                    <textarea type="text" name="description" class="form-control form-control-sm" placeholder="Descripción de la tarea" maxlength="255" aria-label="Descripción"></textarea>
                   </div>
             </div>
                 <div class="row mb-3">
                     <div class="col">
                         <label for="expiration" class="form-label">FINALIZACIÓN</label>
-                        <input type="date" id="expiration" class="form-control form-control-sm" aria-label="Vencimiento">
+                        <input type="date" name="finish" id="expiration" class="form-control form-control-sm" aria-label="Vencimiento">
                       </div>
                       <div class="col form-group">
                         <label class="form-label">ESTADO</label>
-                        <select class="form-control form-control-sm">
+                        <select class="form-control form-control-sm" name="state">
                             <option>PENDIENTE</option>
                             <option>FINALIZADA</option>
                             <option>VENCIDA</option>
@@ -100,7 +102,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col text-center">
-                          <button class="btn btn-primary">ACEPTAR</button>
+                          <button class="btn btn-primary" type="submit">ACEPTAR</button>
                       </div>
                      </div>  
             </form>

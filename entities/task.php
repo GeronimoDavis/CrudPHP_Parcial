@@ -54,6 +54,23 @@ class Tasks{
         }
     }
 
+    public function create(){
+        try{
+            $query = "INSERT INTO tasks (categoryId, title, description, finish, priority, state) VALUES (:cat, :title, :desc, :finish, :priority, :state)";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":cat", $this->categoryId);
+            $stmt->bindParam(":title", $this->title);
+            $stmt->bindParam(":desc", $this->description);
+            $stmt->bindParam(":finish", $this->finish);
+            $stmt->bindParam(":priority", $this->priority);
+            $stmt->bindParam(":state", $this->state);
+            $stmt->execute();
+            return true;
+        }catch(PDOException $e){
+            echo "Error creating task: " . $e->getMessage();
+            return false;
+        }
+    }
 
 
 }

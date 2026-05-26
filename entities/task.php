@@ -38,6 +38,21 @@ class Tasks{
         }
     }
 
+    public function getById($idTask){
+        try{
+            $query = "SELECT * FROM tasks WHERE taskId = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":id", $idTask);
+            $stmt->execute();
+
+            $task = $stmt->fetch(PDO::FETCH_OBJ);
+
+            return $task;
+        }catch(PDOException $e){
+            echo "Error get task: ". $e->getMessage();
+        }
+    }
+
     public function count($idCat){
         try{
             $query = "SELECT COUNT(*) FROM tasks WHERE categoryId = :cat";
@@ -69,6 +84,25 @@ class Tasks{
         }catch(PDOException $e){
             echo "Error creating task: " . $e->getMessage();
             return false;
+        }
+
+    }
+
+    public function update(){
+        try{
+            $query = "UPDATE tasks SET title = :title, description = :description, finish = :finish, priority = :priority, state = :state WHERE taskId = :id";
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":title", $this->title);
+            $stmt->bindParam(":description", $this->description);
+            $stmt->bindParam(":finish", $this->finish);
+            $stmt->bindParam(":priority", $this->priority);
+            $stmt->bindParam(":state", $this->state);
+            $stmt->bindParam(":id", $this->taskId);
+
+            $stmt->execute();
+
+        }catch(PDOException $e){
+            echo "Error updating task: " . $e->getMessage();
         }
     }
 

@@ -35,6 +35,7 @@
                                 <th>INICIADA</th>
                                 <th>PRIORIDAD</th>
                                 <th>ESTADO</th>
+                                <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,6 +55,13 @@
                                     echo "<td>". $tas->start ."</td>";
                                     echo "<td>".$tas->priority."</td>";
                                     echo "<td>". $tas->state ."</td>";
+                                     echo "<td style='text-align:center;'>
+                                            <a href='newtask.php?id=" . $idCat . "&taskId=" . $tas->taskId . "'>
+                                                <button type='button' class='btn btn-primary btn-sm'>
+                                                    <i class='fa fa-plus-circle' aria-hidden='true'></i>
+                                                </button>
+                                            </a>
+                                        </td>";
                                     echo "</tr>";
                                 }
                                 
@@ -67,27 +75,36 @@
     </div>
              <form action="../controllers/tasksController.php" method="POST">
                 <input type="hidden" name="categoryId" value="<?php echo $idCat; ?>">
-                <input type = "hidden" name="action" value="create">
+                <?php if(isset($_GET["taskId"])){
+                    echo "<input type = 'hidden' name='action' value='update'>";
+                    echo "<h1 style='text-align: center;'>Actualizar tarea</h1>";
+                    $task = new TaskController;
+                    $taskData = $task->getTaskById($_GET["taskId"]);
+                }else{
+                    echo "<input type = 'hidden' name='action' value='create'>";
+                    echo "<h1 style='text-align: center;'>Crear nueva tarea</h1>";
+                } ?>
             <div class="row mb-3">
                 <div class="col">
             <label class="form-label" for="responsible">TÍTULO</label>
-            <input type="text" name="title" class="form-control form-control-sm" placeholder="Título de la tarea">
+            <input type="text" name="title" class="form-control form-control-sm" placeholder="Título de la tarea" value="<?php if(isset($taskData)) echo $taskData->title; ?>" maxlength="50" aria-label="Título">
+                </div>
             </div>
             <div class="col">
                 <label for="rangePriority" class="form-label">PRIORIDAD</label>
-                <input type="range" name="priority" class="form-range form-control-sm" min="1" max="10" step="1" id="rangePriority">
+                <input type="range" name="priority" class="form-range form-control-sm" min="1" max="10" step="1" id="rangePriority" value="<?php if(isset($taskData)) echo $taskData->priority; else echo 1; ?>">
                 </div>
             </div>  
             <div class="row mb-3">
                 <div class="col">
                     <label for="description" class="form-label">DESCRIPCIÓN</label>
-                    <textarea type="text" name="description" class="form-control form-control-sm" placeholder="Descripción de la tarea" maxlength="255" aria-label="Descripción"></textarea>
+                    <textarea type="text" name="description" class="form-control form-control-sm" placeholder="Descripción de la tarea" maxlength="255" aria-label="Descripción"><?php if(isset($taskData)) echo $taskData->description; ?></textarea>
                   </div>
             </div>
                 <div class="row mb-3">
                     <div class="col">
                         <label for="expiration" class="form-label">FINALIZACIÓN</label>
-                        <input type="date" name="finish" id="expiration" class="form-control form-control-sm" aria-label="Vencimiento">
+                        <input type="date" name="finish" id="expiration" class="form-control form-control-sm" aria-label="Vencimiento" value="<?php if(isset($taskData)) echo $taskData->finish; ?>">
                       </div>
                       <div class="col form-group">
                         <label class="form-label">ESTADO</label>
@@ -101,6 +118,14 @@
                 </div>
                     </div>
                     <div class="row justify-content-center">
+                        <?php if(isset($_GET["taskId"])){
+                            echo "<div class='col text-center'>";
+                            echo "<a href='newtask.php?id=" . $idCat . "'>";
+                            echo "<button class='btn btn-secondary' type='button'>CANCELAR EDICIÓN</button>";
+                            echo "</a>";
+                            echo "</div>";
+                        }
+                        ?>
                         <div class="col text-center">
                           <button class="btn btn-primary" type="submit">ACEPTAR</button>
                       </div>

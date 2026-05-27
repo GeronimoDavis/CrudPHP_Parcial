@@ -106,6 +106,17 @@ class Tasks{
         }
     }
 
+     public function delete($idTask){
+            try{
+                $query = "DELETE FROM tasks WHERE taskId = :id";
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindParam(":id", $idTask);
+                $stmt->execute();
+            }catch(PDOException $e){
+                echo "Error deliting task: " . $e->getMessage();
+            }
+        }
+
 
 }
 

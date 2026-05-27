@@ -35,7 +35,8 @@
                                 <th>INICIADA</th>
                                 <th>PRIORIDAD</th>
                                 <th>ESTADO</th>
-                                <th>&nbsp;</th>
+                                <th>ACCIONES</th>
+                                <th>ACCIONES</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,13 +56,24 @@
                                     echo "<td>". $tas->start ."</td>";
                                     echo "<td>".$tas->priority."</td>";
                                     echo "<td>". $tas->state ."</td>";
-                                     echo "<td style='text-align:center;'>
+                                    echo "<td style='text-align:center;'>
                                             <a href='newtask.php?id=" . $idCat . "&taskId=" . $tas->taskId . "'>
                                                 <button type='button' class='btn btn-primary btn-sm'>
-                                                    <i class='fa fa-plus-circle' aria-hidden='true'></i>
+                                                    <i class='fa fa-plus-circle' aria-hidden='true'>edit</i>
                                                 </button>
                                             </a>
                                         </td>";
+                                    echo "<td style='text-align:center;'>
+                                            <form action='../controllers/tasksController.php' method='POST'>
+                                                <input type='hidden' name='idTask' value='".$tas->taskId."'/>
+                                                <input type='hidden' name='categoryId' value='".$idCat."'/>
+                                                <input type='hidden' name='action' value='delete'/>
+                                                <button type='submit' class='btn btn-danger btn-sm'>
+                                                    <i class='fa fa-trash' aria-hidden='true'>borrar</i>
+                                                </button>
+                                            </form>
+                                        </td>";
+
                                     echo "</tr>";
                                 }
                                 
@@ -109,6 +121,13 @@
                       <div class="col form-group">
                         <label class="form-label">ESTADO</label>
                         <select class="form-control form-control-sm" name="state">
+                            <?php if(isset($taskData)){
+                                echo "<option>".$taskData->state."</option>";
+                            }
+                            else{
+                                echo "<option value=''>SELECCIONAR ESTADO</option>";
+                            }
+                            ?>
                             <option>PENDIENTE</option>
                             <option>FINALIZADA</option>
                             <option>VENCIDA</option>

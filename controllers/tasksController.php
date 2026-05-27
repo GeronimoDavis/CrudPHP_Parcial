@@ -49,7 +49,12 @@ namespace Controllers;
             $this->task->description = $_POST['description'];
             $this->task->finish = $_POST['finish'];
             $this->task->priority = $_POST['priority'];
-            $this->task->state = $_POST['state'];
+            if(isset($_POST['state']) && $_POST['state'] != ""){
+                $this->task->state = $_POST['state'];}
+             else{
+                $this->task->state = "PENDIENTE";
+            }
+
 
             if($this->task->create()){
                 echo "Tarea creada exitosamente.";
@@ -66,7 +71,12 @@ namespace Controllers;
             $this->task->description = $_POST['description'];
             $this->task->finish = $_POST['finish'];
             $this->task->priority = $_POST['priority'];
-            $this->task->state = $_POST['state'];
+            if(isset($_POST['state']) && $_POST['state'] != ""){
+                $this->task->state = $_POST['state'];}
+             else{
+                 $this->task->state = "PENDIENTE";
+             }
+            
 
             if($this->task->update()){
                 echo "Tarea actualizada exitosamente.";
@@ -78,6 +88,15 @@ namespace Controllers;
             }
         }
 
+        public function deleteTask($idTask, $idCat){
+            $idCate = $idCat;
+            $this->task->delete($idTask);
+            header("Location: ../pages/newtask.php?id=" . $idCate);
+        }
+        
+
+
+
     }
 
     if(isset($_POST["action"]) && $_POST["action"] === "create"){
@@ -86,6 +105,10 @@ namespace Controllers;
     }else if(isset($_POST["action"]) && $_POST["action"] === "update"){
         $controller = new TaskController();
         $controller->updateTask();
+    }else if(isset($_POST["action"]) && $_POST["action"] === "delete"){
+        $controller = new TaskController();
+        $controller->deleteTask($_POST["idTask"], $_POST["categoryId"]);
+        
     }
     
 

@@ -89,6 +89,7 @@ class Tasks{
 
     }
 
+
     public function update($taskId){
         try{
             $query = "UPDATE tasks SET title = :title, description = :description, finish = :finish, priority = :priority, state = :state WHERE taskId = :id";
@@ -99,7 +100,6 @@ class Tasks{
             $stmt->bindParam(":priority", $this->priority);
             $stmt->bindParam(":state", $this->state);
             $stmt->bindParam(":id", $taskId);
-
             $stmt->execute();
 
         }catch(PDOException $e){

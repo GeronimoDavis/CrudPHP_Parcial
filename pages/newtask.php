@@ -88,6 +88,7 @@
              <form action="../controllers/tasksController.php" method="POST">
                 <input type="hidden" name="categoryId" value="<?php echo $idCat; ?>">
                 <input type="hidden" name="idTask" value="<?php echo isset($_GET["taskId"]) ? $_GET["taskId"] : ''; ?>">
+
                 <?php if(isset($_GET["taskId"])){
                     echo "<input type = 'hidden' name='action' value='update'>";
                     echo "<h1 style='text-align: center;'>Actualizar tarea</h1>";

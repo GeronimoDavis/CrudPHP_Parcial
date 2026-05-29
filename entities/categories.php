@@ -6,7 +6,6 @@ require_once "../config/DB.php";
 use Config\DB;
 use PDO;
 use PDOException;
-
 class Categories{
 
 private $conn;

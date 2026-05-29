@@ -71,9 +71,10 @@ class Tasks{
 
     public function create(){
         try{
-            $query = "INSERT INTO tasks (categoryId, title, description, finish, priority, state) VALUES (:cat, :title, :desc, :finish, :priority, :state)";
+            $query = "INSERT INTO tasks (categoryId, userId, title, description, finish, priority, state) VALUES (:cat, :userId, :title, :desc, :finish, :priority, :state)";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(":cat", $this->categoryId);
+            $stmt->bindParam(":userId", $this->userId);
             $stmt->bindParam(":title", $this->title);
             $stmt->bindParam(":desc", $this->description);
             $stmt->bindParam(":finish", $this->finish);
@@ -88,7 +89,7 @@ class Tasks{
 
     }
 
-    public function update(){
+    public function update($taskId){
         try{
             $query = "UPDATE tasks SET title = :title, description = :description, finish = :finish, priority = :priority, state = :state WHERE taskId = :id";
             $stmt = $this->conn->prepare($query);
@@ -97,7 +98,7 @@ class Tasks{
             $stmt->bindParam(":finish", $this->finish);
             $stmt->bindParam(":priority", $this->priority);
             $stmt->bindParam(":state", $this->state);
-            $stmt->bindParam(":id", $this->taskId);
+            $stmt->bindParam(":id", $taskId);
 
             $stmt->execute();
 

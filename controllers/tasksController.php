@@ -45,6 +45,7 @@ namespace Controllers;
 
         public function createTask(){
             $this->task->categoryId = $_POST['categoryId'];
+            $this->task->userId = 1; // Reemplaza con el ID del usuario actual
             $this->task->title = $_POST['title'];
             $this->task->description = $_POST['description'];
             $this->task->finish = $_POST['finish'];
@@ -55,18 +56,23 @@ namespace Controllers;
                 $this->task->state = "PENDIENTE";
             }
 
-
             if($this->task->create()){
                 echo "Tarea creada exitosamente.";
                 header("Location: ../pages/newtask.php?id=" . $this->task->categoryId);
             } else {
                 echo "Error al crear la tarea.";
                 header("Location: ../pages/newtask.php?id=" . $this->task->categoryId);
+
             }
         }
 
-         public function updateTask(){
-            $this->task->categoryId = $_POST['categoryId'];
+         public function updateTask($idTask){
+
+            if(!isset($idTask) || empty($idTask)){
+                echo "ID de tarea no proporcionado.";
+                return;
+            }
+            $this->task->categoryId = $_POST['categoryId'];        
             $this->task->title = $_POST['title'];
             $this->task->description = $_POST['description'];
             $this->task->finish = $_POST['finish'];
@@ -78,13 +84,10 @@ namespace Controllers;
              }
             
 
-            if($this->task->update()){
-                echo "Tarea actualizada exitosamente.";
+           if($this->task->update($idTask)){
                 header("Location: ../pages/newtask.php?id=" . $this->task->categoryId);
             } else {
-                echo "Error al actualizar la tarea.";
                 header("Location: ../pages/newtask.php?id=" . $this->task->categoryId);
-
             }
         }
 
@@ -104,11 +107,10 @@ namespace Controllers;
         $controller->createTask();
     }else if(isset($_POST["action"]) && $_POST["action"] === "update"){
         $controller = new TaskController();
-        $controller->updateTask();
+        $controller->updateTask($_POST["idTask"]);
     }else if(isset($_POST["action"]) && $_POST["action"] === "delete"){
         $controller = new TaskController();
         $controller->deleteTask($_POST["idTask"], $_POST["categoryId"]);
-        
     }
     
 

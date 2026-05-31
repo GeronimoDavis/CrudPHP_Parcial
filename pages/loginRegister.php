@@ -13,7 +13,13 @@
 </head>
 <body>
 
-
+    <?php 
+    if(isset($_GET['error']) && $_GET['error'] === 'notloggedin') {
+        echo "<div class='alert alert-danger' role='alert'>
+            Debe iniciar sesión para acceder a esta página.
+        </div>";
+    }
+    ?>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">

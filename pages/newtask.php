@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    if(!isset($_SESSION["userId"])){
+        header("Location: loginRegister.php?error=notloggedin");
+    }
+?>
 <!doctype html>
 <html lang="es">
 <head>
@@ -152,6 +158,10 @@
                       </div>
                      </div>  
             </form>
+            <a href="../controllers/usersController.php?action=logout">
+                        <button type="button" class="btn btn-secondary btn-sm">
+                            Cerrar Sesión
+                        </button>
 </div>
     </div>
 </body>

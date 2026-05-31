@@ -45,13 +45,13 @@ class User{
             $stmt->execute(); 
             $userRow = $stmt->fetch(PDO::FETCH_OBJ);
 
-            if(userRow){
+            if ($userRow) {
                 if (password_verify($this->password, $userRow->password)) {
                     return $userRow; // Login exitoso, devolvemos los datos
                 }
             }
 
-            return $user;
+            
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

@@ -30,13 +30,39 @@
             
         }
 
+        public function loginUser(){
+            $this->user->username = $_POST["username"];
+            $this->user->password = $_POST["password"];
 
+            $userData = $this->user->login();
+
+            if($userData){
+                $_SESSION["userId"] = $userData->userId;
+                $_SESSION["username"] = $userData->username;
+                header("Location: ../pages/list.php");
+            }else{
+                echo "<p>usuario o contraseña incorrectos</a>";
+            }
+        }
+
+        public function logoutUser(){
+            session_destroy();
+            header("Location: ../pages/loginRegister.php");
+        }
 
     }
 
     if(isset($_POST["register"])){
         $userController = new UserController();
         $userController->registerUser();
+    }
+    else if(isset($_GET["action"]) && $_GET["action"] === "logout"){
+        $userController = new UserController();
+        $userController->logoutUser();
+    }
+    else{
+        $userController = new UserController();
+        $userController->loginUser();
     }
 
 ?>
